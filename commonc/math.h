@@ -75,6 +75,7 @@
 
 /* functions */
 
+double cc_copysign(double a, double b);
 float cc_copysignf(float a, float b);
 
 double cc_sin(double x);
