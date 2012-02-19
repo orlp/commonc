@@ -36,18 +36,18 @@ typedef union {
     double QuadPart;
 #endif
 
-} stopwatch_t;
+} cc_stopwatch_t;
 
 #else /* defined (__WIN32__) || defined (_WIN32) */
 
 typedef struct {
     long tv_sec;
     long tv_usec;
-} stopwatch_t;
+} cc_stopwatch_t;
 
 #endif
 
-void stopwatch_start(stopwatch_t* stopwatch);
-double stopwatch_gettime(stopwatch_t* stopwatch);
+void cc_stopwatch_start(cc_stopwatch_t* stopwatch);
+double cc_stopwatch_gettime(cc_stopwatch_t* stopwatch);
 
 #endif /* STOPWATCH_H_GUARD */

@@ -19,17 +19,17 @@
 #include <windows.h>
 #else
 #include <sys/time.h>
-#end
+#endif
 
 
 #if defined (__WIN32__) || defined (_WIN32)
 
-void stopwatch_start(stopwatch_t *stopwatch) {
-    QueryPerformanceCounter((LARGE_INTEGER*) stopwatch_t);
+void cc_stopwatch_start(cc_stopwatch_t *stopwatch) {
+    QueryPerformanceCounter((LARGE_INTEGER*) stopwatch);
 }
 
 
-double stopwatch_gettime(stopwatch_t *stopwatch) {
+double cc_stopwatch_gettime(cc_stopwatch_t *stopwatch) {
     LARGE_INTEGER frequency;
     LARGE_INTEGER start, stop;
 
@@ -42,12 +42,12 @@ double stopwatch_gettime(stopwatch_t *stopwatch) {
 
 #else
 
-void stopwatch_start(stopwatch_t *stopwatch) {
+void cc_stopwatch_start(cc_stopwatch_t *stopwatch) {
     gettimeofday((timeval*) stopwatch, NULL);
 }
 
 
-double stopwatch_gettime(stopwatch_t *stopwatch) {
+double cc_stopwatch_gettime(cc_stopwatch_t *stopwatch) {
     timeval start, stop;
 
     gettimeofday(&stop, NULL);
