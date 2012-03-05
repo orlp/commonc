@@ -16,7 +16,7 @@
 #ifndef FASTMATH_H_GUARD
 #define FASTMATH_H_GUARD
 
-/* constants */
+/* Constants */
 
 #define CC_E          2.71828182845904523536028747135266250  /* Euler's number e */
 #define CC_E_F          2.71828182845904523536028747135266250f
@@ -73,10 +73,26 @@
 #define CC_4MINPI     0.85840734641020676153735661672049712  /* 4-pi */
 #define CC_4MINPI_F     0.85840734641020676153735661672049712f
 
-/* functions */
+/* Functions */
 
-double cc_copysign(double a, double b);
-float cc_copysignf(float a, float b);
+
+/*
+    Returns a with the sign of b.
+*/
+
+int cc_copysign(int a, int b);
+long cc_copysignl(long a, long b);
+float cc_fcopysignf(float a, float b);
+double cc_fcopysign(double a, double b);
+
+
+
+/*
+
+    Approximation of sin(x). The limrange version has valid range [-pi/2, pi/2] and is much faster,
+    the others have full range at the cost of speed.
+
+*/
 
 double cc_sin(double x);
 double cc_sin_limrange(double x);

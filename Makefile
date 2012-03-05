@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-O3 -Wall -Wno-strict-aliasing -Wno-unused-but-set-variable -Wno-unused-variable
+CFLAGS=-O3 -Wall -Wno-strict-aliasing -Wno-unused-but-set-variable -Wno-unused-variable 
 LIBS=-s
 
 all: test.exe

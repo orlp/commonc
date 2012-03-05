@@ -14,6 +14,11 @@
     warranties are disclaimed. Orson Peters is not liable for any damage
     arising in any way out of the use of this work.
 
+
+    This header contains the macros CC_LITTLE_ENDIAN, CC_BIG_ENDIAN, CC_PDP_ENDIAN which get defined on the respective platform.
+
+    It also contains the CC_BYTE_ORDER macro which is defined as either 1234 or 4321 depending on big or little endian.
+
 */
 
 // Copyright 2005 Caleb Epstein
