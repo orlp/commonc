@@ -13,8 +13,8 @@
 
 */
 
-#ifndef FASTMATH_H_GUARD
-#define FASTMATH_H_GUARD
+#ifndef CC_MATH_H_GUARD
+#define CC_MATH_H_GUARD
 
 /* Constants */
 
@@ -76,6 +76,18 @@
 /* Functions */
 
 
+/* Returns the larger of a and b. */
+
+int cc_max(int a, int b);
+long cc_maxl(long a, long b);
+long long cc_maxll(long long a, long long b);
+unsigned int cc_maxu(unsigned int a, unsigned int b);
+unsigned long cc_maxul(unsigned long a, unsigned long b);
+unsigned long long cc_maxull(unsigned long long a, unsigned long long b);
+double cc_fmax(double a, double b);
+float cc_fmaxf(float a, float b);
+
+
 /*
     Returns a with the sign of b.
 */
@@ -86,10 +98,37 @@ float cc_fcopysignf(float a, float b);
 double cc_fcopysign(double a, double b);
 
 
+/*
+    Returns -1 if x < 0, 0 if x == 0 and 1 if x > 0
+*/
+
+
+int cc_sign(int x);
+int cc_signl(long x);
+int cc_signll(long long x);
+int cc_fsign(double x);
+int cc_fsignf(float x);
+
+
+/*
+    Returns the absolute value of x (always positive)
+*/
+
+
+int cc_abs(int x);
+long cc_absl(long x);
+long long cc_absll(long long x);
+float cc_fabsf(float x);
+double cc_fabs(double x);
+
+
+/* Rounds x to the nearest int */
+
+long cc_round(double x);
 
 /*
 
-    Approximation of sin(x). The limrange version has valid range [-pi/2, pi/2] and is much faster,
+    Approximation of sin(x). The limrange version has valid range [-pi/2, pi/2] and is faster,
     the others have full range at the cost of speed.
 
 */
@@ -99,4 +138,4 @@ double cc_sin_limrange(double x);
 float cc_sinf(float x);
 float cc_sinf_limrange(float x);
 
-#endif /* FASTMATH_H_GUARD */
+#endif /* CC_MATH_H_GUARD */

@@ -13,8 +13,8 @@
 
 */
 
-#ifndef STOPWATCH_H_GUARD
-#define STOPWATCH_H_GUARD
+#ifndef CC_STOPWATCH_H_GUARD
+#define CC_STOPWATCH_H_GUARD
 
 /* prevent namespace pollution, use own definitions of timeval and LARGE_INTEGER */
 
@@ -50,4 +50,4 @@ typedef struct {
 void cc_stopwatch_start(cc_stopwatch_t* stopwatch);
 double cc_stopwatch_gettime(cc_stopwatch_t* stopwatch);
 
-#endif /* STOPWATCH_H_GUARD */
+#endif /* CC_STOPWATCH_H_GUARD */

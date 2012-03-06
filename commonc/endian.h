@@ -48,8 +48,8 @@
  * defined the BOOST_ENDIAN macro.
  */
 
-#ifndef CC_ENDIAN_H
-#define CC_ENDIAN_H
+#ifndef CC_ENDIAN_H_GUARD
+#define CC_ENDIAN_H_GUARD
 
 /* GNU libc offers the helpful header <endian.h> which defines
    __BYTE_ORDER */
@@ -96,3 +96,5 @@
 #else
 # error The file endian.h needs to be set up for your CPU type.
 #endif
+
+#endif /* CC_ENDIAN_H_GUARD */

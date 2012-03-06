@@ -13,17 +13,67 @@
 
 */
 
-#include <math.h>
-
-#include "math.h"
 #include "config.h"
+#include "math.h"
+#include "endian.h"
+#include "integer.h"
+
+/* Returns the larger of a and b. */
+
+int cc_max(int a, int b) {
+    if (a > b) return a;
+    return b;
+}
+
+
+long cc_maxl(long a, long b) {
+    if (a > b) return a;
+    return b;
+}
+
+
+long long cc_maxll(long long a, long long b) {
+    if (a > b) return a;
+    return b;
+}
+
+
+unsigned int cc_maxu(unsigned int a, unsigned int b) {
+    if (a > b) return a;
+    return b;
+}
+
+
+unsigned long cc_maxul(unsigned long a, unsigned long b) {
+    if (a > b) return a;
+    return b;
+}
+
+
+unsigned long long cc_maxull(unsigned long long a, unsigned long long b) {
+    if (a > b) return a;
+    return b;
+}
+
+
+double cc_fmax(double a, double b) {
+    if (a > b) return a;
+    return b;
+}
+
+
+float cc_fmaxf(float a, float b) {
+    if (a > b) return a;
+    return b;
+}
 
 /*
 
     int cc_copysign(int a, int b);
     long cc_copysignl(long a, long b);
-    float cc_fcopysignf(float a, float b);
+    long long cc_copysignll(long long a, long long b);
     double cc_fcopysign(double a, double b);
+    float cc_fcopysignf(float a, float b);
 
     Returns a with the sign of b.
 
@@ -32,67 +82,203 @@
 
 inline int cc_copysign(int a, int b) {
     #ifdef CC_NO_BRANCH
-        return ((b > 0) - (b < 0)) * a;
+    return ((b > 0) - (b < 0)) * a;
     #else
-        if (!b) return 0;
-        if ((a ^ b) < 0) a = -a;
+    if (!b) return 0;
+    if ((a ^ b) < 0) a = -a;
 
-        return a;
+    return a;
     #endif
 }
 
 
 inline long cc_copysignl(long a, long b) {
     #ifdef CC_NO_BRANCH
-        return ((b > 0) - (b < 0)) * a;
+    return ((b > 0) - (b < 0)) * a;
     #else
-        if (!b) return 0;
-        if ((a ^ b) < 0) a = -a;
+    if (!b) return 0;
+    if ((a ^ b) < 0) a = -a;
 
-        return a;
+    return a;
     #endif
 }
 
-
-inline float cc_fcopysignf(float a, float b) {
-    #ifdef CC_NO_IEEE754
-        return ((b > 0) - (b < 0)) * a;
+inline long long cc_copysignll(long long a, long long b) {
+    #ifdef CC_NO_BRANCH
+    return ((b > 0) - (b < 0)) * a;
     #else
-        union {
-            float f;
-            int i;
-        } ai, bi;
+    if (!b) return 0;
+    if ((a ^ b) < 0) a = -a;
 
-        ai.f = a;
-        bi.f = b;
-
-        ai.i &= 0x7FFFFFFF;
-        ai.i |= bi.i & 0x80000000;
-
-        return ai.f;
+    return a;
     #endif
 }
 
 
 inline double cc_fcopysign(double a, double b) {
-    #ifdef CC_NO_IEEE754
-        return ((b > 0) - (b < 0)) * a;
-    #else
-        union {
-            double d;
-            long l;
-        } al, bl;
+    /*#ifdef CC_IEEE754
+    union {
+        double d;
+        uint64_t l;
 
-        al.d = a;
-        bl.d = b;
+        #ifdef CC_LITTLE_ENDIAN
+        struct {
+            uint32_t lw;
+            uint32_t hw;
+        };
+        #else
+        struct {
+            uint32_t hw;
+            uint32_t lw;
+        };
+        #endif
+    } al, bl;
 
-        al.l &= 0x7FFFFFFFFFFFFFFF;
-        al.l |= bl.l & 0x8000000000000000;
+    al.d = a;
+    bl.d = b;
 
-        return al.d;
-    #endif
+    al.hw &= 0x7FFFFFFF;
+    al.hw |= bl.hw & 0x80000000;
+
+    return al.d;
+    #else*/
+
+    return ((b > 0) - (b < 0)) * a;
+
+    /*#endif*/
 }
 
+
+inline float cc_fcopysignf(float a, float b) {
+    /*#ifdef CC_IEEE754
+    union {
+        float f;
+        uint32_t i;
+    } ai, bi;
+
+    ai.f = a;
+    bi.f = b;
+
+    ai.i &= 0x7FFFFFFF;
+    ai.i |= bi.i & 0x80000000;
+
+    return ai.f;
+    #else*/
+
+    return ((b > 0) - (b < 0)) * a;
+
+    /*#endif*/
+}
+
+
+int cc_sign(int x) {
+    return (x > 0) - (x < 0);
+}
+
+
+int cc_signl(long x) {
+    return (x > 0) - (x < 0);
+}
+
+
+int cc_signll(long long x) {
+    return (x > 0) - (x < 0);
+}
+
+
+int cc_fsign(double x) {
+    return (x > 0.0) - (x < 0.0);
+}
+
+
+int cc_fsignf(float x) {
+    return (x > 0.0f) - (x < 0.0f);
+}
+
+
+
+
+/*
+    Returns the absolute value of x (always positive)
+*/
+
+
+
+
+int cc_abs(int x) {
+    if (x < 0) x = -x;
+
+    return x;
+}
+
+
+long cc_absl(long x) {
+    if (x < 0) x = -x;
+
+    return x;
+}
+
+
+long long cc_absll(long long x) {
+    if (x < 0) x = -x;
+
+    return x;
+}
+
+
+float cc_fabsf(float x) {
+    if (x < 0.0f) x = -x;
+
+    return x;
+}
+
+
+double cc_fabs(double x) {
+    if (x < 0.0) x = -x;
+
+    return x;
+}
+
+
+/*
+
+    long cc_round(double x);
+    long cc_roundf(float x);
+
+    Rounds x to the nearest integer (both negative and positive). Warning, this _may_ use "banker" rounding, that means 0.5 doesn't always get rounded up, instead if gets rounded to the nearest even integer. Note the _may_, if either CC_IEEE754 or CC_DOUBLE_PREC is not defined than it uses regular up-rounding. This version can be many times faster that simply casting to long.
+
+*/
+
+
+long cc_round(double x) {
+    #if defined(CC_IEEE754) && defined(CC_DOUBLE_PREC)
+    const double magic_round = 6755399441055744.0; /* http://stereopsis.com/sree/fpu2006.html */
+
+    union {
+        double d;
+
+        struct {
+            #ifdef CC_LITTLE_ENDIAN
+            uint32_t lw;
+            uint32_t hw;
+            #else
+            uint32_t hw;
+            uint32_t lw;
+            #endif
+        };
+    } bit_hack;
+
+    bit_hack.d = x;
+    bit_hack.d += magic_round;
+
+    return bit_hack.lw;
+
+    #else
+
+    return (long) (x + cc_fcopysign(0.5, x));
+
+    #endif
+}
 
 /*
 
@@ -149,20 +335,8 @@ inline double cc_sin_limrange(double x) {
 inline float cc_sinf(float x) {
     long k;
 
-    #ifndef CC_NO_IEEE754
-    union {
-        double d;
-        long i;
-    } dtoi_hack;
-    #endif
-
     /* find offset of x from the range -pi to pi */
-    #ifdef CC_NO_IEEE754
-    k = (long) (CC_1_PI_F * x + cc_fcopysignf(0.5f, x));
-    #else
-    dtoi_hack.d = (double) (CC_1_PI_F * x) + 103079215104.5;
-    k = dtoi_hack.i >> 16;
-    #endif
+    k = cc_round(CC_1_PI_F * x);
 
     /* bring x into range */
     x -= k * CC_PI_F;
@@ -171,7 +345,11 @@ inline float cc_sinf(float x) {
     x = cc_sinf_limrange(x);
 
     /* if x is in an odd pi count we must flip */
-    x -= (2 * (k & 1)) * x; /* trick for x = (k % 2) == 0 ? x : -x; */
+    #ifdef CC_NO_BRANCH
+    x *= (1 - 2 * (k & 1));
+    #else
+    if (k & 1) x = -x;
+    #endif
 
     return x;
 }
@@ -180,20 +358,8 @@ inline float cc_sinf(float x) {
 inline double cc_sin(double x) {
     long k;
 
-    #ifndef CC_NO_IEEE754
-    union {
-        double d;
-        long i;
-    } dtoi_hack;
-    #endif
-
     /* find offset of x from the range -pi to pi */
-    #ifdef CC_NO_IEEE754
-    k = (long) (CC_1_PI * x + cc_fcopysign(0.5, x));
-    #else
-    dtoi_hack.d = CC_1_PI * x + 103079215104.5;
-    k = dtoi_hack.i >> 16;
-    #endif
+    k = cc_round(CC_1_PI * x);
 
     /* bring x into range */
     x -= k * CC_PI;
@@ -202,7 +368,11 @@ inline double cc_sin(double x) {
     x = cc_sin_limrange(x);
 
     /* if x is in an odd pi count we must flip */
-    x -= (2 * (k & 1)) * x; /* trick for x = (k % 2) == 0 ? x : -x; */
+    #ifdef CC_NO_BRANCH
+    x *= (1 - 2 * (k & 1));
+    #else
+    if (k & 1) x = -x;
+    #endif
 
     return x;
 }
