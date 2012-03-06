@@ -13,10 +13,10 @@
 
 */
 
-#include "config.h"
-#include "math.h"
-#include "endian.h"
-#include "integer.h"
+#include "commonc/config.h"
+#include "commonc/math.h"
+#include "commonc/endian.h"
+#include "commonc/integer.h"
 
 /* Returns the larger of a and b. */
 

@@ -1,20 +1,21 @@
 CC=gcc
-CFLAGS=-O3 -Wall -Wno-strict-aliasing -Wno-unused-but-set-variable -Wno-unused-variable
-LIBS=-s
+CFLAGS=-O3 -Wall -Iinclude
 
 all: test.exe
 
-test.exe: test.c commonc/math.h commonc/stopwatch.h libcommonc.a
-	${CC} ${CFLAGS} -o test.exe test.c -L. -lcommonc ${LIBS}
+test.exe: test.c  include/commonc/math.h  include/commonc/stopwatch.h lib/libcommonc.a
+	${CC} ${CFLAGS} -o test.exe test.c -s -Llib -lcommonc
 
-commonc/math.o: commonc/config.h commonc/math.h commonc/math.c
-	${CC} ${CFLAGS} -c -o commonc/math.o commonc/math.c
+src/math.o: include/commonc/config.h include/commonc/math.h include/commonc/endian.h include/commonc/integer.h src/math.c
+	${CC} ${CFLAGS} -c -o src/math.o src/math.c
 
-commonc/stopwatch.o: commonc/config.h commonc/stopwatch.h commonc/stopwatch.c
-	${CC} ${CFLAGS} -c -o commonc/stopwatch.o commonc/stopwatch.c
+src/stopwatch.o: include/commonc/stopwatch.h src/stopwatch.c
+	${CC} ${CFLAGS} -c -o src/stopwatch.o src/stopwatch.c
 
-libcommonc.a: commonc/math.o commonc/stopwatch.o
-	ar -rcs libcommonc.a commonc/math.o commonc/stopwatch.o
+lib/libcommonc.a: src/math.o src/stopwatch.o
+	ar -rcs lib/libcommonc.a src/math.o src/stopwatch.o
 
 clean:
-	del /S /Q *.exe > nul
+	rm -Rf \*.exe
+	rm -Rf \*.a
+	rm -Rf \*.o

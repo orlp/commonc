@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
     }
 
     /* cc_sinf test */
-    printf("\nTesting cc_sinf\n");  
+    printf("\nTesting cc_sinf\n");
 
     /* performance check */
     {
@@ -116,6 +116,8 @@ int main(int argc, char **argv) {
         assert(fabs(cc_sinf(CC_PI/6) - 0.5) < 0.0000001);
         assert(fabs(cc_sinf(CC_PI) - 0.0) < 0.0000001);
     }
+
+    (void)prevent_opti;
 
     return 0;
 }
