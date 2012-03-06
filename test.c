@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
     }
 
     /* cc_sinf test */
-    printf("\nTesting cc_sinf\n");
+    printf("\nTesting cc_sinf\n");  
 
     /* performance check */
     {

@@ -1,6 +1,6 @@
 /*
 
-    Copyright 2011 Orson Peters. All rights reserved.
+    Copyright 2012 Orson Peters. All rights reserved.
 
     Redistribution of this work, with or without modification, is permitted if
     Orson Peters is attributed as the original author or licensor of
